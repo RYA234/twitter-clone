@@ -6,7 +6,7 @@ import SidebarMenuItem from "./SidebarMenuItem";
 
 export default function Sidebar(){
     return(
-        <div className="hidden sm:flex flex-col p2 xl:items-start fixed h-full">
+        <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full">
             {/* ツイッター　ロゴ */}
             <div className="hoverEffect p-0 hover:bg-blue-100 xl:px-1">
                 <Image
@@ -16,7 +16,7 @@ export default function Sidebar(){
                 ></Image>
             </div>
             {/* メニュー */}
-            <div className="mt-4 mb-2.5 xl;items-start">
+            <div className="mt-4 mb-2.5 xl:items-start">
                 <SidebarMenuItem text="Home" Icon={HomeIcon} active/>
                 <SidebarMenuItem text="Explore" Icon={HashtagIcon} />
                 <SidebarMenuItem text="Notifications" Icon={BellIcon} />
