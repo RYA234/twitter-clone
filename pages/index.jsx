@@ -21,9 +21,8 @@ export default function Home() {
 
         {/* Feed */}
         <Feed/>
-
-        <Widgets />
         {/* Modal */}
+        <Widgets />
       </main>
     </div>
   )
