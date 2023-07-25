@@ -1,5 +1,6 @@
 
 import { ChartBarIcon,ChatIcon,DotsHorizontalIcon,HeartIcon,ShareIcon,TrashIcon } from "@heroicons/react/outline";
+import Moment from "react-moment";
 
 export default function Post({ post }){
     return(
@@ -7,7 +8,7 @@ export default function Post({ post }){
             {/* userImage */}
             <img 
                 className="h-11 w-11 rounded-full mr-4"
-                src={post.userImg}
+                src={post.data().userImg}
                 alt="user-img"
             />
             {/* rightSide */}
@@ -18,12 +19,12 @@ export default function Post({ post }){
                         {/* post user info */}
                         <div className="flex items-center justify-between">
                             <h4 className="font-bold text-[15px] sm:text-[16px] hover:underline">
-                                {post.name}
+                                {post.data().name}
                             </h4>
                         </div>
-                        <span className="text-sm sm:text-[15px] hover:underline">@{post.username} - </span>
+                        <span className="text-sm sm:text-[15px] hover:underline">@{post.data().username} - </span>
                         <span className="text-sm sm:text-[15px] hover:underline">
-                            {post.timestamp}
+                            <Moment fromNow >{post?.timestamp?.toDate()}</Moment>
                         </span>
                     </div>
                     {/* dot icon */}
@@ -31,11 +32,11 @@ export default function Post({ post }){
                 </div>
                 {/* post text */}
                 <p className="text-gray-800 text-[16px] mb-2">
-                    {post.text}
+                    {post.data().text}
                 </p>
 
                 {/* post image */}
-                <img className="rounded-2xl mr-2" src={post.img} alt="" />
+                <img className="rounded-2xl mr-2" src={post.data().image} alt="" />
 
                 {/* icon */}
                 <div className="flex justify-between between text-gray-500 p-2">
