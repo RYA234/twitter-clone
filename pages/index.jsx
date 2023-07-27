@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Sidebar from '../components/Sidebar';
 import Feed from '../components/Feed';
 import Widgets from '../components/Widgets';
+import CommentModal from '../components/CommentModal';
 
 export default function Home({ newsResults, randomUserResults }) {
   // console.log(newsResults.articles[0].author)
@@ -25,6 +26,8 @@ export default function Home({ newsResults, randomUserResults }) {
         <Feed/>
         {/* Modal */}
         <Widgets newsResults={newsResults.articles} randomUserResults={randomUserResults.results} />
+      
+        <CommentModal />
       </main>
     </div>
   )
