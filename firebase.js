@@ -1,7 +1,7 @@
 
-import {initializeApp,getApp,getApps} from "firebase/app";
-import {getFirestore, getFireStore} from "firebase/firestore";
-import {getStorage} from "firebase/storage";
+import {initializeApp,getApp,getApps} from "@firebase/app";
+import {getFirestore, getFireStore} from "@firebase/firestore";
+import {getStorage} from "@firebase/storage";
 import { get } from "http";
 
 
@@ -16,6 +16,6 @@ const firebaseConfig = {
 };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) :getApp();
-const db = getFirestore();
-const storage = getStorage();
+const db = getFirestore(app);
+const storage = getStorage(app);
 export{app,db, storage}
