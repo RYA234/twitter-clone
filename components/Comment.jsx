@@ -2,14 +2,13 @@
 import {
     ChartBarIcon,
     ChatIcon,
-    DOtsHorizontalIcon,
     DotsHorizontalIcon,
     HeartIcon,
     ShareIcon,
     TrashIcon
 }from "@heroicons/react/outline"
 
-import {HeartIcon as HearticonFilled} from "@heroicons/react/solid"
+import {HeartIcon as HeartIconFilled} from "@heroicons/react/solid"
 import Moment from "react-moment";
 import {
     collection,
@@ -55,11 +54,12 @@ export default function Comment({comment,commentId, originalPostId}){
                     doc(db,"posts",originalPostId,"comments",commentId,"likes",session?.user.uid)
                 )
             }else{
-                await setDoc(db,"posts",orignalPostId,"comment",commentId,"likes",session?.user.uid),
+                await setDoc(
+                    doc(db,"posts", originalPostId,"comments",commentId,"likes",session?.user.uid),
                 {
                     username: session.user.username,
                 }
-            }
+            )}
         }else{
             signIn();
         }
@@ -71,58 +71,78 @@ export default function Comment({comment,commentId, originalPostId}){
         }
     }
     return (
-    <div>
+    <div className="flex p-3 cursor-pointer border-b border-gray-200 pl-20">
          {/* user image */}
-         <img />
+         <img
+            className="h-11 w-11 rounded-full mr-4"
+            src={comment?.userImg}
+            alt="user-img"
+          />
           {/* right side */}
          <div>
               {/* Header */}
-              <div>
+              <div className="flex items-center justify-between">
                     {/* post user info */}
-                    <div>
-                        <h4>
+                    <div className="flex items-center space-x-1 whitespace-nowrap">
+                        <h4 className="font-bold text-[15px] sm:text-[16px] hover:underline">
                             {comment?.name}
                         </h4>
-                        <span>
+                        <span className="text-sm sm:text-[15px]">
                             @{comment?.username} -{""}
                         </span>
-                        <span>
+                        <span className="text-sm sm:text-[15px] hover:underline">
                             <Moment fromNow>{comment?.timestamp?.toDate()}</Moment>
                         </span>
                     </div>
                     {/* dot icon */}
-                    <DotsHorizontalIcon className="h-10" />
+                    <DotsHorizontalIcon className="h-10 hoverEffect w-10 hover:bg-sky-100 hover:text-sky-500 p-2" />
               </div>
               {/* post text */}
-              <p>
+              <p className="text-gray-800 text-[15px] sm:text-[16px] mb-2">
                 {comment?.comment}
               </p>
               {/* icons */}
-              <div>
-                <div>
-                    <ChatIcon className="h-9 w-9"/>
+              <div className="flex justify-between text-gray-500 p-2">
+                <div className="flex items-center select-none">
+                    <ChatIcon
+                        onClick = {()=>{
+                            if(!session){
+                                signIn();
+                            }else{
+                                setPostId(originalPostId);
+                                setOpen(!open)
+                            }
+                        }}
+                        className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100"/>
                 </div>
 
                 {session?.user.uid === comment?.userId &&(
-                    <TrashIcon className="h-9 w-9" />
+                    <TrashIcon
+                         onClick={deleteComment}
+                         className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100" />
                 )}
 
-                <div>
+                <div className="flex items-center">
                     {hasLiked ?(
-                        <HeartIconFiled className="h-9 w-9" />
+                        <HeartIconFilled
+                            onClick={likeComment} 
+                            className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100" 
+                        />
                     ):(
-                        <HeartIcon className="h-9 w-9" />
+                        <HeartIcon
+                             onClick={likeComment} 
+                             className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100" />
                     )}
 
                     {likes.length > 0 &&(
-                        <span>
+                        <span className={`${hasLiked && "text-red-600"} text-sm select-none`}>
                             {" "}
                             {likes.length}
                         </span>
                     )}
                 </div>
-                <ShareIcon className="h-9 w-9" />
-                <ChartBarIcon className="h-9 w-9"/>
+                <ShareIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100" />
+                <ChartBarIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100"/>
               </div>
          </div>
     </div>);
